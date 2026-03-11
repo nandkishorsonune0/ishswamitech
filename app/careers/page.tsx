@@ -83,7 +83,7 @@ export default function CareersPage() {
             className="text-center"
           >
             <h1 className="font-heading font-bold text-4xl md:text-5xl mb-4">
-              Join the NexaSoft Team
+              Join the IshSwamiTech Team
             </h1>
             <p className="text-[#8B9CB6] text-lg max-w-2xl mx-auto">
               Build the future of software with us
@@ -307,7 +307,7 @@ export default function CareersPage() {
 
           <div className="glass rounded-xl p-8 border border-[#8B9CB6]/10 max-w-3xl mx-auto">
             <p className="text-[#F0F4FF] italic text-center mb-4">
-              &ldquo;Working at NexaSoft has been the best career decision I&apos;ve made. The projects are challenging, the team is supportive, and I&apos;ve grown more in a year than in five years elsewhere.&rdquo;
+              &ldquo;Working at IshSwamiTech has been the best career decision I&apos;ve made. The projects are challenging, the team is supportive, and I&apos;ve grown more in a year than in five years elsewhere.&rdquo;
             </p>
             <p className="text-[#8B9CB6] text-center text-sm">— Team Member</p>
           </div>

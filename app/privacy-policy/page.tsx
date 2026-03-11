@@ -80,7 +80,7 @@ export default function PrivacyPolicyPage() {
               <p>
                 Depending on your location, you may have the right to access, correct, delete, or
                 port your personal data. You may also have the right to object to or restrict
-                certain processing. To exercise these rights, contact us at hello@nexasoft.com.
+                certain processing. To exercise these rights, contact us at hello@ishswamitech.com.
               </p>
             </div>
 
@@ -91,10 +91,10 @@ export default function PrivacyPolicyPage() {
               <p>
                 For questions about this Privacy Policy or our data practices, contact us at{" "}
                 <a
-                  href="mailto:hello@nexasoft.com"
+                  href="mailto:hello@ishswamitech.com"
                   className="text-[#00D4FF] hover:underline"
                 >
-                  hello@nexasoft.com
+                  hello@ishswamitech.com
                 </a>
                 .
               </p>

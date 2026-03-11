@@ -44,7 +44,7 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
           >
             <h1 className="font-heading font-bold text-4xl md:text-5xl mb-4">
-              About NexaSoft
+              About IshSwamiTech
             </h1>
             <p className="text-[#8B9CB6] text-lg max-w-2xl">
               We&apos;re builders, thinkers, and problem solvers.
@@ -65,7 +65,7 @@ export default function AboutPage() {
             >
               <Image
                 src="/Assets/Programmers_4.jpg"
-                alt="NexaSoft team"
+                alt="IshSwamiTech team"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -78,7 +78,7 @@ export default function AboutPage() {
             >
               <h2 className="font-heading font-bold text-2xl mb-6">Our Story</h2>
               <p className="text-[#8B9CB6] mb-6 leading-relaxed">
-                NexaSoft was founded with a simple mission: to build powerful digital solutions
+                IshSwamiTech was founded with a simple mission: to build powerful digital solutions
                 that empower businesses of every size. From our first project to today, we&apos;ve
                 stayed true to our core belief that great software is built through collaboration,
                 transparency, and a relentless focus on quality.
@@ -167,7 +167,7 @@ export default function AboutPage() {
               Meet Our Team
             </h2>
             <p className="text-[#8B9CB6] max-w-2xl mx-auto">
-              The people behind NexaSoft
+              The people behind IshSwamiTech
             </p>
           </motion.div>
 

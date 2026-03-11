@@ -15,7 +15,7 @@ export const projects = [
     challenge: "HealthFirst needed a mobile app to help users track fitness goals and health metrics with seamless cloud sync.",
     solution: "We built a cross-platform Flutter app with Firebase backend, real-time sync, and intuitive dashboards.",
     features: ["Real-time sync", "Health metrics dashboard", "Goal tracking", "Push notifications", "Offline mode"],
-    testimonial: "NexaSoft delivered beyond our expectations. The app has transformed how our users engage with their health.",
+    testimonial: "IshSwamiTech delivered beyond our expectations. The app has transformed how our users engage with their health.",
     testimonialAuthor: "Sarah Chen",
     testimonialRole: "CEO, HealthFirst Inc.",
   },

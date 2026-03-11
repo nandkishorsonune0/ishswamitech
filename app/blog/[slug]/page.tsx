@@ -15,7 +15,7 @@ export async function generateMetadata({
   const post = blogPosts.find((p) => p.slug === slug);
   if (!post) return { title: "Post Not Found" };
   return {
-    title: `${post.title} | NexaSoft Blog`,
+    title: `${post.title} | IshSwamiTech Blog`,
     description: post.excerpt,
   };
 }

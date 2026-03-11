@@ -110,9 +110,10 @@ export default function HomePage() {
           {[...marqueeTech, ...marqueeTech].map((tech, i) => (
             <span
               key={i}
-              className="font-mono text-[#8B9CB6] hover:text-[#00D4FF] transition-colors"
+              className="font-mono text-[#8B9CB6] hover:text-[#00D4FF] transition-colors flex items-center gap-2"
             >
-              {tech}
+              <tech.icon className="w-5 h-5" />
+              {tech.name}
             </span>
           ))}
         </motion.div>

@@ -31,7 +31,7 @@ export default function TermsOfServicePage() {
                 1. Service Agreement
               </h2>
               <p>
-                By engaging NexaSoft Solutions for software development or related services, you
+                By engaging IshSwamiTech Solutions for software development or related services, you
                 agree to these Terms of Service. A separate project agreement or statement of work
                 may specify additional terms for individual projects.
               </p>
@@ -66,7 +66,7 @@ export default function TermsOfServicePage() {
                 4. Limitation of Liability
               </h2>
               <p>
-                To the maximum extent permitted by law, NexaSoft Solutions shall not be liable for
+                To the maximum extent permitted by law, IshSwamiTech Solutions shall not be liable for
                 any indirect, incidental, special, or consequential damages arising from the use of
                 our services. Our total liability shall not exceed the amount paid by you for the
                 specific project giving rise to the claim.
@@ -79,7 +79,7 @@ export default function TermsOfServicePage() {
               </h2>
               <p>
                 These Terms shall be governed by and construed in accordance with the laws of the
-                jurisdiction in which NexaSoft Solutions is registered, without regard to its
+                jurisdiction in which IshSwamiTech Solutions is registered, without regard to its
                 conflict of law provisions.
               </p>
             </div>
@@ -91,10 +91,10 @@ export default function TermsOfServicePage() {
               <p>
                 For questions about these Terms, contact us at{" "}
                 <a
-                  href="mailto:hello@nexasoft.com"
+                  href="mailto:hello@ishswamitech.com"
                   className="text-[#00D4FF] hover:underline"
                 >
-                  hello@nexasoft.com
+                  hello@ishswamitech.com
                 </a>
                 .
               </p>

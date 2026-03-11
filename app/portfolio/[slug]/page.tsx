@@ -15,7 +15,7 @@ export async function generateMetadata({
   const project = projects.find((p) => p.slug === slug);
   if (!project) return { title: "Project Not Found" };
   return {
-    title: `${project.title} | Case Study | NexaSoft Solutions`,
+    title: `${project.title} | Case Study | IshSwamiTech Solutions`,
     description: project.description,
   };
 }

@@ -71,10 +71,10 @@ export default function ContactPage() {
                 <Mail className="w-8 h-8 text-[#00D4FF] mb-4" />
                 <h3 className="font-heading font-semibold mb-2">Email</h3>
                 <a
-                  href="mailto:hello@nexasoft.com"
+                  href="mailto:hello@ishswamitech.com"
                   className="text-[#8B9CB6] hover:text-[#00D4FF] transition-colors"
                 >
-                  hello@nexasoft.com
+                  hello@ishswamitech.com
                 </a>
               </div>
               <div className="glass rounded-xl p-6 border border-[#8B9CB6]/10">
@@ -84,7 +84,7 @@ export default function ContactPage() {
                   href="tel:+911234567890"
                   className="text-[#8B9CB6] hover:text-[#00D4FF] transition-colors"
                 >
-                  +91-XXXXXXXXXX
+                  +91-7218378311
                 </a>
               </div>
               <div className="glass rounded-xl p-6 border border-[#8B9CB6]/10">
@@ -176,19 +176,6 @@ export default function ContactPage() {
                         <option value="other">Other</option>
                       </select>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Project Budget</label>
-                      <select
-                        {...register("budget")}
-                        className="w-full px-4 py-3 rounded-lg bg-[#0A0F1E] border border-[#8B9CB6]/20 text-[#F0F4FF] focus:border-[#00D4FF] focus:outline-none"
-                      >
-                        <option value="">Select...</option>
-                        <option value="<1k">&lt;$1K</option>
-                        <option value="1k-5k">$1K - $5K</option>
-                        <option value="5k-20k">$5K - $20K</option>
-                        <option value="20k+">$20K+</option>
-                      </select>
-                    </div>
                   </div>
                   <div className="mb-6">
                     <label className="block text-sm font-medium mb-2">Project Description *</label>
@@ -219,20 +206,6 @@ export default function ContactPage() {
                   </button>
                 </motion.form>
               )}
-
-              {/* Map placeholder */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="glass rounded-xl aspect-video flex items-center justify-center border border-[#8B9CB6]/20"
-              >
-                <div className="text-center">
-                  <MapPin className="w-12 h-12 text-[#8B9CB6]/50 mx-auto mb-2" />
-                  <p className="text-[#8B9CB6]">Map placeholder</p>
-                  <p className="text-[#8B9CB6] text-sm">Add Google Maps embed</p>
-                </div>
-              </motion.div>
             </div>
           </div>
         </div>

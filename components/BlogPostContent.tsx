@@ -100,7 +100,7 @@ export default function BlogPostContent({ post, relatedPosts }: BlogPostContentP
       <section className="py-8">
         <div className="container mx-auto px-4 max-w-3xl">
           <div>
-            <ShareButtons title={post.title} url={"https://nexasoft.com/blog/" + post.slug} />
+            <ShareButtons title={post.title} url={"https://ishswamitech.com/blog/" + post.slug} />
           </div>
         </div>
       </section>
@@ -118,7 +118,7 @@ export default function BlogPostContent({ post, relatedPosts }: BlogPostContentP
             </div>
             <div>
               <h3 className="font-heading font-semibold">{post.author}</h3>
-              <p className="text-[#8B9CB6] text-sm">Author at NexaSoft</p>
+              <p className="text-[#8B9CB6] text-sm">Author at IshSwamiTech</p>
             </div>
           </div>
         </div>

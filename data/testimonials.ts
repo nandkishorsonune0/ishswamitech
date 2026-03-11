@@ -5,7 +5,7 @@ export const testimonials = [
     company: "HealthFirst Inc.",
     role: "CEO",
     avatar: "/Assets/Programmers_4.jpg",
-    quote: "NexaSoft delivered beyond our expectations. The HealthTrack app has transformed how our users engage with their health. Their team's expertise and dedication are unmatched.",
+    quote: "IshSwamiTech delivered beyond our expectations. The HealthTrack app has transformed how our users engage with their health. Their team's expertise and dedication are unmatched.",
     rating: 5,
   },
   {
@@ -23,7 +23,7 @@ export const testimonials = [
     company: "FinTech Solutions",
     role: "Product Lead",
     avatar: "/Assets/Programmers_4.jpg",
-    quote: "FinanceAI has changed how our users manage money. The AI recommendations are surprisingly accurate and the UX is delightful. NexaSoft truly understands product.",
+    quote: "FinanceAI has changed how our users manage money. The AI recommendations are surprisingly accurate and the UX is delightful. IshSwamiTech truly understands product.",
     rating: 5,
   },
   {
@@ -32,7 +32,7 @@ export const testimonials = [
     company: "AgileWorks",
     role: "Founder",
     avatar: "/Assets/Programmers_4.jpg",
-    quote: "TaskFlow has become essential for our distributed team. The offline capability is a game-changer. NexaSoft understood our needs from day one.",
+    quote: "TaskFlow has become essential for our distributed team. The offline capability is a game-changer. IshSwamiTech understood our needs from day one.",
     rating: 5,
   },
   {

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Sparkles, Linkedin, Github, Twitter, Instagram, Youtube } from "lucide-react";
 import ScrollToTop from "./ScrollToTop";
 
@@ -38,11 +39,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="p-1.5 rounded-lg bg-[#00D4FF]/20">
-                <Sparkles className="w-5 h-5 text-[#00D4FF]" />
+              <div className="p-1.5 rounded-lg bg-[#00D4FF]/20 overflow-hidden flex items-center justify-center">
+                <Image src="/Assets/main-logo.png" alt="IshSwamiTech Logo" width={32} height={32} className="w-8 h-8 object-cover scale-[1.2]" />
               </div>
-              <span className="font-heading font-bold text-xl text-[#F0F4FF]">
-                NexaSoft
+              <span className="font-heading font-bold text-xl gradient-text">
+                IshSwamiTech
               </span>
             </Link>
             <p className="text-[#8B9CB6] text-sm max-w-xs mb-6">
@@ -121,20 +122,20 @@ export default function Footer() {
 
         <div className="mt-12 pt-8 border-t border-[#8B9CB6]/20 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[#8B9CB6] text-sm">
-            © 2025 NexaSoft Solutions. All rights reserved.
+            © 2025 IshSwamiTech Solutions. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <a
-              href="mailto:hello@nexasoft.com"
+              href="mailto:hello@ishswamitech.com"
               className="text-[#8B9CB6] hover:text-[#00D4FF] text-sm transition-colors"
             >
-              hello@nexasoft.com
+              hello@ishswamitech.com
             </a>
             <a
               href="tel:+911234567890"
               className="text-[#8B9CB6] hover:text-[#00D4FF] text-sm transition-colors"
             >
-              +91-XXXXXXXXXX
+              +91-7218378311
             </a>
           </div>
         </div>

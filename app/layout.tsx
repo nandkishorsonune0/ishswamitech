@@ -6,11 +6,11 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
 
 export const metadata: Metadata = {
-  title: "NexaSoft Solutions | Turning Vision Into Digital Reality",
+  title: "IshSwamiTech Solutions | Turning Vision Into Digital Reality",
   description:
     "Professional IT company delivering web apps, mobile apps, desktop software, cloud solutions, AI/ML, and UI/UX design. Build software that moves the world.",
   openGraph: {
-    title: "NexaSoft Solutions | Turning Vision Into Digital Reality",
+    title: "IshSwamiTech Solutions | Turning Vision Into Digital Reality",
     description:
       "Professional IT company delivering web apps, mobile apps, desktop software, cloud solutions, AI/ML, and UI/UX design.",
   },
