@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "About Us | IshSwamiTech Solutions",
+export const metadata: Metadata = createPageMetadata({
+  title: "About IshSwamiTech",
   description:
-    "We're builders, thinkers, and problem solvers. Learn about our mission, team, and values.",
-};
+    "Meet the team behind IshSwamiTech Solutions and learn how we build reliable software products with a client-first mindset.",
+  path: "/about",
+  keywords: ["software company about page", "technology team", "product engineering company"],
+});
 
 export default function AboutLayout({
   children,

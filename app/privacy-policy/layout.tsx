@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy | IshSwamiTech Solutions",
-  description: "Our privacy policy explains how we collect, use, and protect your data.",
-};
+export const metadata: Metadata = createPageMetadata({
+  title: "Privacy Policy",
+  description: "Read how IshSwamiTech collects, uses, and protects visitor and client data.",
+  path: "/privacy-policy",
+});
 
 export default function PrivacyLayout({
   children,

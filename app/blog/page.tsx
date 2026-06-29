@@ -1,113 +1,186 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Search, ArrowRight } from "lucide-react";
+import {
+  Search,
+  ArrowUpRight,
+  Calendar,
+  Clock,
+  User,
+  Tag,
+  Mail,
+} from "lucide-react";
 import { blogPosts } from "@/data/blog";
 
-const tags = ["All", "Web Dev", "Mobile", "AI/ML", "Design", "Cloud", "Business"];
+const tags = ["All", "Case Study", "Web Dev", "Mobile", "AI/ML", "Design", "Cloud", "Business"];
+
+function formatDate(input: string) {
+  const date = new Date(input);
+  if (Number.isNaN(date.getTime())) return input;
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
 
 export default function BlogPage() {
   const [search, setSearch] = useState("");
   const [activeTag, setActiveTag] = useState("All");
 
-  const filteredPosts = blogPosts.filter((post) => {
-    const matchTag = activeTag === "All" || post.category === activeTag;
-    const matchSearch =
-      !search ||
-      post.title.toLowerCase().includes(search.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(search.toLowerCase());
-    return matchTag && matchSearch;
-  });
+  const sortedAll = useMemo(
+    () => [...blogPosts].sort((a, b) => b.date.localeCompare(a.date)),
+    []
+  );
 
-  const featuredPost = blogPosts[0];
+  const filteredPosts = useMemo(() => {
+    return sortedAll.filter((post) => {
+      const matchTag = activeTag === "All" || post.category === activeTag;
+      const term = search.trim().toLowerCase();
+      const matchSearch =
+        !term ||
+        post.title.toLowerCase().includes(term) ||
+        post.excerpt.toLowerCase().includes(term);
+      return matchTag && matchSearch;
+    });
+  }, [sortedAll, activeTag, search]);
+
+  const featuredPost = filteredPosts[0];
+  const gridPosts = filteredPosts.slice(1);
+  const popularPosts = sortedAll.slice(0, 4);
 
   return (
     <div>
-      {/* Page Hero */}
+      {/* HERO */}
       <section className="pt-32 pb-16">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            className="mb-4"
           >
-            <h1 className="font-heading font-bold text-4xl md:text-5xl mb-4">
-              Insights & Resources
-            </h1>
-            <div className="relative max-w-md">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8B9CB6]" />
+            <nav className="type-ui text-[var(--text-muted)]">
+              <Link href="/" className="hover:text-[var(--accent)] transition-colors">
+                Home
+              </Link>
+              <span className="mx-2">/</span>
+              <span className="text-[var(--foreground)]">Insights</span>
+            </nav>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="grid items-end gap-8 lg:grid-cols-[1.3fr_1fr]"
+          >
+            <div>
+              <p className="type-eyebrow mb-4">Insights & resources</p>
+              <h1 className="type-page-title mb-5 text-[var(--foreground)]">
+                Practical writing on building modern software
+              </h1>
+              <p className="type-lead max-w-2xl">
+                Field notes, deep dives, and case studies from our team — covering web
+                engineering, AI, mobile, design, and the operating model behind shipping
+                products that grow.
+              </p>
+            </div>
+
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--text-muted)]" />
               <input
                 type="search"
                 placeholder="Search articles..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-lg bg-[#111827] border border-[#8B9CB6]/20 text-[#F0F4FF] placeholder-[#8B9CB6] focus:border-[#00D4FF] focus:outline-none"
+                className="w-full rounded-full border border-[var(--border)] bg-[var(--card)] px-12 py-3.5 text-[var(--foreground)] placeholder-[var(--text-muted)] backdrop-blur-xl transition-colors focus:border-[var(--border-strong)] focus:outline-none"
               />
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Featured Post */}
-      <section className="pb-16">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-          >
-            <Link href={`/blog/${featuredPost.slug}`}>
-              <div className="glass rounded-2xl overflow-hidden border border-[#8B9CB6]/10 hover:border-[#00D4FF]/30 group">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                  <div className="aspect-video lg:aspect-auto lg:min-h-[300px] relative">
-                    <Image
-                      src={featuredPost.image}
-                      alt={featuredPost.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                    />
-                  </div>
-                  <div className="p-8 lg:p-12 flex flex-col justify-center">
-                    <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#7B2FFF]/20 text-[#7B2FFF] mb-4 inline-block w-fit">
-                      {featuredPost.category}
-                    </span>
-                    <h2 className="font-heading font-bold text-2xl md:text-3xl mb-4 group-hover:text-[#00D4FF] transition-colors">
-                      {featuredPost.title}
-                    </h2>
-                    <p className="text-[#8B9CB6] mb-6 line-clamp-2">{featuredPost.excerpt}</p>
-                    <div className="flex items-center gap-4 text-sm text-[#8B9CB6]">
-                      <span>{featuredPost.author}</span>
-                      <span>{featuredPost.date}</span>
-                      <span>{featuredPost.readTime}</span>
+      {/* FEATURED */}
+      {featuredPost && (
+        <section className="pb-16">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+            >
+              <Link href={`/blog/${featuredPost.slug}`}>
+                <article className="glass group overflow-hidden rounded-[2rem] border border-[var(--border)] transition-all hover:border-[var(--border-strong)] hover:shadow-[var(--button-shadow)]">
+                  <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
+                    <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:min-h-[400px]">
+                      <Image
+                        src={featuredPost.image}
+                        alt={featuredPost.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                      />
+                      <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--button-gradient)] px-3 py-1 text-xs font-semibold text-white shadow-[var(--button-shadow)]">
+                        Featured
+                      </div>
+                    </div>
+                    <div className="flex flex-col justify-center p-8 lg:p-12">
+                      <span className="type-tag mb-4 inline-flex w-fit items-center gap-1 rounded-md border border-[var(--border)] bg-[var(--card-soft)] px-2.5 py-1 text-[var(--accent)]">
+                        <Tag className="h-3 w-3" />
+                        {featuredPost.category}
+                      </span>
+                      <h2 className="type-section-title mb-4 text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors">
+                        {featuredPost.title}
+                      </h2>
+                      <p className="type-body mb-6 line-clamp-3 text-[var(--text-muted)]">
+                        {featuredPost.excerpt}
+                      </p>
+                      <div className="type-ui mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[var(--text-muted)]">
+                        <span className="inline-flex items-center gap-1.5">
+                          <User className="h-4 w-4" />
+                          {featuredPost.author}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5">
+                          <Calendar className="h-4 w-4" />
+                          {formatDate(featuredPost.date)}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5">
+                          <Clock className="h-4 w-4" />
+                          {featuredPost.readTime}
+                        </span>
+                      </div>
+                      <span className="type-ui inline-flex items-center gap-1.5 text-[var(--accent)]">
+                        Read article
+                        <ArrowUpRight className="h-4 w-4 transition-transform group-hover:rotate-45" />
+                      </span>
                     </div>
                   </div>
-                </div>
-              </div>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+                </article>
+              </Link>
+            </motion.div>
+          </div>
+        </section>
+      )}
 
-      {/* Filter Tags */}
-      <section className="pb-8">
+      {/* FILTERS */}
+      <section className="pb-6">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="flex flex-wrap gap-2"
+            className="flex flex-wrap items-center gap-2 border-b border-[var(--border)] pb-6"
           >
+            <span className="type-band-label mr-2 hidden text-[var(--text-muted)] md:inline-block">
+              Filter
+            </span>
             {tags.map((tag) => (
               <button
                 key={tag}
                 onClick={() => setActiveTag(tag)}
-                className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                className={`type-ui rounded-full border px-4 py-2 transition-all ${
                   activeTag === tag
-                    ? "bg-[#00D4FF] text-[#0A0F1E]"
-                    : "bg-[#111827] text-[#8B9CB6] hover:text-[#F0F4FF] border border-[#8B9CB6]/20"
+                    ? "border-[var(--border-strong)] bg-[var(--accent)] text-white shadow-[var(--button-shadow)]"
+                    : "border-[var(--border)] bg-[var(--card)] text-[var(--text-muted)] hover:border-[var(--border-strong)] hover:text-[var(--foreground)]"
                 }`}
               >
                 {tag}
@@ -117,71 +190,101 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* Blog Grid + Sidebar */}
-      <section className="py-16">
+      {/* GRID + SIDEBAR */}
+      <section className="pb-24">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {filteredPosts.slice(1).map((post, i) => (
-                  <motion.div
-                    key={post.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                  >
-                    <Link href={`/blog/${post.slug}`}>
-                      <div className="glass rounded-xl overflow-hidden border border-[#8B9CB6]/10 hover:border-[#00D4FF]/30 group">
-                        <div className="aspect-video relative overflow-hidden">
-                          <Image
-                            src={post.image}
-                            alt={post.title}
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-300"
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                          />
-                        </div>
-                        <div className="p-6">
-                          <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#7B2FFF]/20 text-[#7B2FFF] mb-2 inline-block">
-                            {post.category}
-                          </span>
-                          <h3 className="font-heading font-semibold text-lg mb-2 group-hover:text-[#00D4FF] transition-colors line-clamp-2">
-                            {post.title}
-                          </h3>
-                          <p className="text-[#8B9CB6] text-sm line-clamp-2 mb-4">
-                            {post.excerpt}
-                          </p>
-                          <div className="flex items-center justify-between">
-                            <span className="text-[#8B9CB6] text-xs">{post.date}</span>
-                            <span className="text-[#00D4FF] text-sm font-medium flex items-center gap-1">
-                              Read <ArrowRight className="w-4 h-4" />
+              {gridPosts.length === 0 && !featuredPost ? (
+                <div className="glass rounded-2xl border border-[var(--border)] p-12 text-center">
+                  <p className="type-card-title mb-2 text-[var(--foreground)]">
+                    No articles match your filters.
+                  </p>
+                  <p className="type-body text-[var(--text-muted)]">
+                    Try a different category or search term.
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  {gridPosts.map((post, i) => (
+                    <motion.article
+                      key={post.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.04 }}
+                    >
+                      <Link href={`/blog/${post.slug}`}>
+                        <div className="glass group flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--border)] transition-all hover:-translate-y-1 hover:border-[var(--border-strong)]">
+                          <div className="relative aspect-video overflow-hidden">
+                            <Image
+                              src={post.image}
+                              alt={post.title}
+                              fill
+                              className="object-cover transition-transform duration-300 group-hover:scale-105"
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                            />
+                          </div>
+                          <div className="flex flex-1 flex-col p-6">
+                            <span className="type-tag mb-3 inline-flex w-fit items-center gap-1 rounded-md border border-[var(--border)] bg-[var(--card-soft)] px-2 py-0.5 text-[var(--accent)]">
+                              {post.category}
                             </span>
+                            <h3 className="type-card-title mb-2 line-clamp-2 text-[var(--foreground)] transition-colors group-hover:text-[var(--accent)]">
+                              {post.title}
+                            </h3>
+                            <p className="type-body mb-5 line-clamp-2 flex-1 text-sm text-[var(--text-muted)]">
+                              {post.excerpt}
+                            </p>
+                            <div className="type-ui flex items-center justify-between text-[var(--text-muted)]">
+                              <span className="inline-flex items-center gap-1.5">
+                                <Calendar className="h-4 w-4" />
+                                {formatDate(post.date)}
+                              </span>
+                              <span className="inline-flex items-center gap-1 text-[var(--accent)]">
+                                Read
+                                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:rotate-45" />
+                              </span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
+                      </Link>
+                    </motion.article>
+                  ))}
+                </div>
+              )}
             </div>
 
-            {/* Sidebar */}
-            <div className="space-y-8">
+            {/* SIDEBAR */}
+            <aside className="space-y-6">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="glass rounded-xl p-6 border border-[#8B9CB6]/10"
+                className="glass rounded-2xl border border-[var(--border)] p-6"
               >
-                <h3 className="font-heading font-semibold mb-4">Popular Posts</h3>
+                <div className="mb-4 flex items-center justify-between">
+                  <h3 className="type-card-title text-[var(--foreground)]">Popular posts</h3>
+                  <span className="type-tag rounded-md bg-[var(--card-soft)] px-2 py-0.5 text-[var(--accent)]">
+                    Top
+                  </span>
+                </div>
                 <ul className="space-y-4">
-                  {blogPosts.slice(0, 3).map((post) => (
-                    <li key={post.id}>
+                  {popularPosts.map((post, idx) => (
+                    <li key={post.id} className="group">
                       <Link
                         href={`/blog/${post.slug}`}
-                        className="text-[#8B9CB6] hover:text-[#00D4FF] text-sm transition-colors line-clamp-2"
+                        className="flex gap-3"
                       >
-                        {post.title}
+                        <span className="type-stat shrink-0 text-xl text-[var(--text-muted)] opacity-50">
+                          0{idx + 1}
+                        </span>
+                        <div>
+                          <p className="type-ui mb-1 line-clamp-2 text-sm text-[var(--foreground)] transition-colors group-hover:text-[var(--accent)]">
+                            {post.title}
+                          </p>
+                          <p className="type-body text-xs text-[var(--text-muted)]">
+                            {formatDate(post.date)} · {post.readTime}
+                          </p>
+                        </div>
                       </Link>
                     </li>
                   ))}
@@ -191,27 +294,58 @@ export default function BlogPage() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="glass rounded-xl p-6 border border-[#00D4FF]/20"
+                transition={{ delay: 0.35 }}
+                className="relative overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-gradient-to-br from-[var(--card)] via-[var(--card)] to-[var(--card-soft)] p-6"
               >
-                <h3 className="font-heading font-semibold mb-2">
-                  Get weekly dev insights
-                </h3>
-                <p className="text-[#8B9CB6] text-sm mb-4">
-                  Subscribe to our newsletter for the latest in software development.
-                </p>
-                <div className="flex gap-2">
-                  <input
-                    type="email"
-                    placeholder="Your email"
-                    className="flex-1 px-4 py-2 rounded-lg bg-[#0A0F1E] border border-[#8B9CB6]/20 text-[#F0F4FF] text-sm focus:border-[#00D4FF] focus:outline-none"
-                  />
-                  <button className="px-4 py-2 rounded-lg bg-[#00D4FF] text-[#0A0F1E] font-semibold text-sm hover:bg-[#00D4FF]/90 transition-colors">
-                    Subscribe
-                  </button>
+                <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-[var(--accent)]/15 blur-2xl" />
+                <div className="relative">
+                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--card-soft)] text-[var(--accent)]">
+                    <Mail className="h-5 w-5" />
+                  </div>
+                  <h3 className="type-card-title mb-2 text-[var(--foreground)]">
+                    Field notes, every Friday
+                  </h3>
+                  <p className="type-body mb-4 text-sm text-[var(--text-muted)]">
+                    One short, practical email on engineering, design, and shipping software.
+                    No spam, easy to unsubscribe.
+                  </p>
+                  <form className="space-y-2">
+                    <input
+                      type="email"
+                      placeholder="your@email.com"
+                      className="w-full rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-sm text-[var(--foreground)] placeholder-[var(--text-muted)] focus:border-[var(--border-strong)] focus:outline-none"
+                      required
+                    />
+                    <button
+                      type="submit"
+                      className="w-full rounded-full bg-[var(--button-gradient)] px-4 py-2.5 text-sm font-semibold text-white shadow-[var(--button-shadow)] transition-all hover:-translate-y-0.5"
+                    >
+                      Subscribe
+                    </button>
+                  </form>
                 </div>
               </motion.div>
-            </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="glass rounded-2xl border border-[var(--border)] p-6"
+              >
+                <h3 className="type-card-title mb-4 text-[var(--foreground)]">Browse by topic</h3>
+                <div className="flex flex-wrap gap-2">
+                  {tags.filter((t) => t !== "All").map((tag) => (
+                    <button
+                      key={tag}
+                      onClick={() => setActiveTag(tag)}
+                      className="type-tag rounded-md border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1 text-[var(--text-muted)] transition-colors hover:border-[var(--border-strong)] hover:text-[var(--accent)]"
+                    >
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            </aside>
           </div>
         </div>
       </section>

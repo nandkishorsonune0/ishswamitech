@@ -2,6 +2,16 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  Calendar,
+  Clock,
+  User,
+  Tag,
+  Mail,
+} from "lucide-react";
 import ShareButtons from "./ShareButtons";
 
 interface BlogPost {
@@ -23,159 +33,272 @@ interface BlogPostContentProps {
   relatedPosts: BlogPost[];
 }
 
+function formatDate(input: string) {
+  const date = new Date(input);
+  if (Number.isNaN(date.getTime())) return input;
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+function renderContent(content: string) {
+  const lines = content.split("\n");
+  const blocks: React.ReactNode[] = [];
+  let listBuffer: string[] = [];
+
+  const flushList = (idx: number) => {
+    if (listBuffer.length === 0) return;
+    blocks.push(
+      <ul key={`ul-${idx}`} className="mb-6 list-disc space-y-2 pl-6 marker:text-[var(--accent)]">
+        {listBuffer.map((item, i) => (
+          <li key={i} className="type-body text-[var(--text-muted)]">
+            {item}
+          </li>
+        ))}
+      </ul>
+    );
+    listBuffer = [];
+  };
+
+  lines.forEach((rawLine, idx) => {
+    const line = rawLine.trimEnd();
+    if (line.startsWith("- ")) {
+      listBuffer.push(line.replace("- ", ""));
+      return;
+    }
+    flushList(idx);
+
+    if (line.startsWith("## ")) {
+      blocks.push(
+        <h2
+          key={idx}
+          className="type-section-title mt-12 mb-4 text-[var(--foreground)]"
+        >
+          {line.replace("## ", "")}
+        </h2>
+      );
+      return;
+    }
+    if (line.startsWith("### ")) {
+      blocks.push(
+        <h3
+          key={idx}
+          className="type-panel-title mt-8 mb-3 text-[var(--foreground)]"
+        >
+          {line.replace("### ", "")}
+        </h3>
+      );
+      return;
+    }
+    if (line.trim() === "") return;
+    blocks.push(
+      <p key={idx} className="type-body mb-5 text-[var(--text-muted)]">
+        {line}
+      </p>
+    );
+  });
+
+  flushList(lines.length);
+  return blocks;
+}
+
 export default function BlogPostContent({ post, relatedPosts }: BlogPostContentProps) {
+  const shareUrl = `https://ishswamitech.com/blog/${post.slug}`;
+
   return (
     <div>
-      <section className="pt-32 pb-16">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-2 text-[#8B9CB6] hover:text-[#00D4FF] mb-8 transition-colors"
+      {/* HERO */}
+      <section className="pt-32 pb-12">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-4xl">
+            <Link
+              href="/blog"
+              className="type-ui mb-8 inline-flex items-center gap-2 text-[var(--text-muted)] transition-colors hover:text-[var(--accent)]"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to all articles
+            </Link>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <span className="type-tag mb-5 inline-flex w-fit items-center gap-1 rounded-md border border-[var(--border)] bg-[var(--card-soft)] px-2.5 py-1 text-[var(--accent)]">
+                <Tag className="h-3 w-3" />
+                {post.category}
+              </span>
+              <h1 className="type-page-title mb-5 text-[var(--foreground)]">{post.title}</h1>
+              <p className="type-lead mb-8 max-w-3xl">{post.excerpt}</p>
+
+              <div className="type-ui flex flex-wrap items-center gap-x-5 gap-y-2 text-[var(--text-muted)]">
+                <span className="inline-flex items-center gap-1.5">
+                  <User className="h-4 w-4" />
+                  {post.author}
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <Calendar className="h-4 w-4" />
+                  {formatDate(post.date)}
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <Clock className="h-4 w-4" />
+                  {post.readTime}
+                </span>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* COVER */}
+      <section className="pb-12">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="mx-auto max-w-5xl"
           >
-            ← Back to Blog
-          </Link>
-          <div>
-            <div className="aspect-video rounded-xl overflow-hidden relative mb-8">
+            <div className="relative aspect-[16/9] overflow-hidden rounded-[2rem] border border-[var(--border)]">
               <Image
                 src={post.image}
                 alt={post.title}
                 fill
+                priority
                 className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 896px"
+                sizes="(max-width: 1280px) 100vw, 1024px"
               />
             </div>
-            <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#7B2FFF]/20 text-[#7B2FFF] mb-4 inline-block">
-              {post.category}
-            </span>
-            <h1 className="font-heading font-bold text-3xl md:text-4xl mb-4">
-              {post.title}
-            </h1>
-            <div className="flex flex-wrap items-center gap-4 text-[#8B9CB6] text-sm">
-              <span>{post.author}</span>
-              <span>{post.date}</span>
-              <span>{post.readTime}</span>
-            </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      <section className="py-8">
-        <div className="container mx-auto px-4 max-w-3xl">
-          <article className="prose prose-invert prose-lg max-w-none">
-            <div className="whitespace-pre-wrap text-[#8B9CB6] leading-relaxed">
-              {post.content.split("\n").map((line, i) => {
-                if (line.startsWith("## ")) {
-                  return (
-                    <h2 key={i} className="font-heading font-bold text-2xl text-[#F0F4FF] mt-8 mb-4">
-                      {line.replace("## ", "")}
-                    </h2>
-                  );
-                }
-                if (line.startsWith("### ")) {
-                  return (
-                    <h3 key={i} className="font-heading font-semibold text-xl text-[#F0F4FF] mt-6 mb-3">
-                      {line.replace("### ", "")}
-                    </h3>
-                  );
-                }
-                if (line.startsWith("- ")) {
-                  return (
-                    <li key={i} className="ml-4 text-[#8B9CB6]">
-                      {line.replace("- ", "")}
-                    </li>
-                  );
-                }
-                if (line.trim() === "") return <br key={i} />;
-                return (
-                  <p key={i} className="mb-4">
-                    {line}
-                  </p>
-                );
-              })}
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section className="py-8">
-        <div className="container mx-auto px-4 max-w-3xl">
-          <div>
-            <ShareButtons title={post.title} url={"https://ishswamitech.com/blog/" + post.slug} />
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16">
-        <div className="container mx-auto px-4 max-w-3xl">
-          <div className="glass rounded-xl p-6 border border-[#8B9CB6]/10 flex items-center gap-4">
-            <div className="w-16 h-16 rounded-full overflow-hidden relative shrink-0 aspect-square">
-              <Image
-                src={(post as { authorAvatar?: string }).authorAvatar || "/Assets/Programmers_4.jpg"}
-                alt={post.author}
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div>
-              <h3 className="font-heading font-semibold">{post.author}</h3>
-              <p className="text-[#8B9CB6] text-sm">Author at IshSwamiTech</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24 bg-[#111827]">
+      {/* ARTICLE BODY */}
+      <section className="pb-12">
         <div className="container mx-auto px-4">
-          <div>
-            <h2 className="font-heading font-bold text-2xl mb-8">Related Articles</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="mx-auto max-w-3xl">
+            <article>{renderContent(post.content)}</article>
+          </div>
+        </div>
+      </section>
+
+      {/* SHARE */}
+      <section className="pb-12">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl">
+            <div className="glass flex flex-col items-start gap-4 rounded-2xl border border-[var(--border)] p-6 sm:flex-row sm:items-center sm:justify-between">
+              <p className="type-band-label text-[var(--text-muted)]">Share this article</p>
+              <ShareButtons title={post.title} url={shareUrl} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AUTHOR */}
+      <section className="pb-16">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl">
+            <div className="glass flex items-center gap-5 rounded-2xl border border-[var(--border)] p-6">
+              <div className="relative aspect-square h-16 w-16 shrink-0 overflow-hidden rounded-2xl ring-2 ring-[var(--card-soft)]">
+                <Image
+                  src={post.authorAvatar || "/Assets/Programmers_4.jpg"}
+                  alt={post.author}
+                  fill
+                  className="object-cover"
+                  sizes="64px"
+                />
+              </div>
+              <div>
+                <p className="type-eyebrow mb-1 text-[var(--text-muted)]">Written by</p>
+                <h3 className="type-card-title text-[var(--foreground)]">{post.author}</h3>
+                <p className="type-body text-sm text-[var(--text-muted)]">
+                  Engineer & writer at IshSwamiTech Solutions
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* RELATED */}
+      {relatedPosts.length > 0 && (
+        <section className="site-section bg-[var(--home-band-bg)]">
+          <div className="container mx-auto px-4">
+            <div className="mb-10 flex items-end justify-between">
+              <div>
+                <p className="type-eyebrow mb-3">Keep reading</p>
+                <h2 className="type-section-title text-[var(--foreground)]">Related articles</h2>
+              </div>
+              <Link
+                href="/blog"
+                className="type-ui inline-flex items-center gap-2 text-[var(--accent)] transition-colors hover:text-[var(--link-emphasis)]"
+              >
+                All articles
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {relatedPosts.map((p) => (
-                <Link key={p.id} href={"/blog/" + p.slug}>
-                  <div className="glass rounded-xl overflow-hidden border border-[#8B9CB6]/10 hover:border-[#00D4FF]/30 group">
-                    <div className="aspect-video relative overflow-hidden">
+                <Link key={p.id} href={`/blog/${p.slug}`}>
+                  <article className="glass group flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--border)] transition-all hover:-translate-y-1 hover:border-[var(--border-strong)]">
+                    <div className="relative aspect-video overflow-hidden">
                       <Image
                         src={p.image}
                         alt={p.title}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, 33vw"
                       />
                     </div>
-                    <div className="p-6">
-                      <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#7B2FFF]/20 text-[#7B2FFF] mb-2 inline-block">
+                    <div className="flex flex-1 flex-col p-6">
+                      <span className="type-tag mb-3 inline-flex w-fit items-center gap-1 rounded-md border border-[var(--border)] bg-[var(--card-soft)] px-2 py-0.5 text-[var(--accent)]">
                         {p.category}
                       </span>
-                      <h3 className="font-heading font-semibold group-hover:text-[#00D4FF] transition-colors line-clamp-2">
+                      <h3 className="type-card-title mb-2 line-clamp-2 text-[var(--foreground)] transition-colors group-hover:text-[var(--accent)]">
                         {p.title}
                       </h3>
-                      <p className="text-[#8B9CB6] text-sm mt-1">{p.date}</p>
+                      <p className="type-body mt-auto text-xs text-[var(--text-muted)]">
+                        {formatDate(p.date)} · {p.readTime}
+                      </p>
                     </div>
-                  </div>
+                  </article>
                 </Link>
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      <section className="py-24">
+      {/* NEWSLETTER */}
+      <section className="site-section">
         <div className="container mx-auto px-4">
-          <div className="glass rounded-2xl p-12 text-center border border-[#00D4FF]/20 max-w-2xl mx-auto">
-            <h2 className="font-heading font-bold text-2xl mb-4">
-              Get weekly dev insights
-            </h2>
-            <p className="text-[#8B9CB6] mb-6">
-              Subscribe to our newsletter for the latest in software development.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Your email"
-                className="flex-1 px-4 py-3 rounded-lg bg-[#0A0F1E] border border-[#8B9CB6]/20 text-[#F0F4FF] focus:border-[#00D4FF] focus:outline-none"
-              />
-              <button className="px-6 py-3 rounded-lg bg-[#00D4FF] text-[#0A0F1E] font-semibold hover:bg-[#00D4FF]/90 transition-colors">
-                Subscribe
-              </button>
+          <div className="glass relative mx-auto max-w-3xl overflow-hidden rounded-[2rem] border border-[var(--border-strong)] p-10 text-center md:p-14">
+            <div className="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-[var(--accent)]/15 blur-3xl" />
+            <div className="absolute -bottom-20 -left-20 h-60 w-60 rounded-full bg-[var(--secondary)]/15 blur-3xl" />
+            <div className="relative">
+              <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--card-soft)] text-[var(--accent)]">
+                <Mail className="h-5 w-5" />
+              </div>
+              <p className="type-eyebrow mb-4">Weekly field notes</p>
+              <h2 className="type-section-title mb-4 text-[var(--foreground)]">
+                Get the next article straight to your inbox
+              </h2>
+              <p className="type-lead mx-auto mb-8 max-w-xl">
+                One short, practical email each Friday. Engineering, design, and shipping
+                software — no fluff.
+              </p>
+              <form className="mx-auto flex max-w-md flex-col gap-3 sm:flex-row">
+                <input
+                  type="email"
+                  required
+                  placeholder="your@email.com"
+                  className="flex-1 rounded-full border border-[var(--border)] bg-[var(--surface)] px-5 py-3 text-[var(--foreground)] placeholder-[var(--text-muted)] focus:border-[var(--border-strong)] focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  className="rounded-full bg-[var(--button-gradient)] px-6 py-3 font-semibold text-white shadow-[var(--button-shadow)] transition-all hover:-translate-y-0.5"
+                >
+                  Subscribe
+                </button>
+              </form>
             </div>
           </div>
         </div>

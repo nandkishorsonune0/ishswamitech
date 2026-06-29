@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Our Services | IshSwamiTech Solutions",
+export const metadata: Metadata = createPageMetadata({
+  title: "Software Development Services",
   description:
-    "End-to-end software solutions: Web, Mobile, Desktop, AI/ML, Cloud, UI/UX, and more.",
-};
+    "Explore IshSwamiTech services across web development, mobile apps, AI/ML, desktop software, cloud engineering, and UI/UX design.",
+  path: "/services",
+  keywords: ["software development services", "web and mobile app services", "AI consulting services"],
+});
 
 export default function ServicesLayout({
   children,

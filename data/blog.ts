@@ -233,4 +233,297 @@ Startups need to move fast. But the wrong choices create technical debt that slo
     date: "2025-02-10",
     readTime: "6 min read",
   },
+  {
+    id: 7,
+    slug: "case-study-healthtrack",
+    title: "Case Study: HealthTrack — Fitness & Health Monitoring App",
+    excerpt:
+      "How we shipped a Flutter + Firebase health app with real-time sync, offline mode, and a 4.8 App Store rating for HealthFirst Inc.",
+    content: `
+## Client & context
+
+HealthFirst Inc. needed a consumer health app so users could track goals and metrics with reliable cloud sync across devices.
+
+## Challenge
+
+Data had to stay accurate in real time, work offline on poor networks, and feel trustworthy for sensitive health-adjacent data.
+
+## Solution
+
+We delivered a cross-platform Flutter client with Firebase for auth, sync, and push notifications, plus clear dashboards and goal flows.
+
+## What we shipped
+
+- Real-time sync and conflict-safe updates
+- Health metrics dashboard and goal tracking
+- Push notifications and offline-first patterns
+
+## Outcomes
+
+- 50K+ downloads
+- 4.8 App Store rating
+- Strong engagement on daily active usage
+    `,
+    category: "Case Study",
+    tag: "case-study",
+    image: "/Assets/hero_img.jpg",
+    author: "IshSwamiTech Team",
+    authorAvatar: "/Assets/Programmers_4.jpg",
+    date: "2025-01-28",
+    readTime: "5 min read",
+  },
+  {
+    id: 8,
+    slug: "case-study-shopnest",
+    title: "Case Study: ShopNest — E‑Commerce at Scale",
+    excerpt:
+      "A React and Node.js storefront with Stripe, real-time inventory, and a 3× lift in conversion for RetailPro Ltd.",
+    content: `
+## Client & context
+
+RetailPro needed to replace a legacy stack with a fast, modern commerce experience.
+
+## Challenge
+
+Checkout friction, slow pages, and inventory drift between channels were hurting conversion.
+
+## Solution
+
+We built a React storefront and Node.js APIs with Stripe, real-time inventory, and an admin dashboard teams could run day to day.
+
+## Highlights
+
+- Product catalog and performant PLP/PDP
+- Cart, checkout, and payment reliability
+- Inventory sync and operational analytics
+
+## Results
+
+- 3× conversion rate improvement
+- ~40% faster perceived load times
+    `,
+    category: "Case Study",
+    tag: "case-study",
+    image: "/Assets/computer-screen-with-blue-background-with-keyboard-mouse.jpg",
+    author: "IshSwamiTech Team",
+    authorAvatar: "/Assets/Programmers_4.jpg",
+    date: "2025-01-22",
+    readTime: "6 min read",
+  },
+  {
+    id: 9,
+    slug: "case-study-financeai",
+    title: "Case Study: FinanceAI — Budgeting With Natural Language",
+    excerpt:
+      "OpenAI-powered insights on top of React and Python: how FinTech Solutions doubled retention with clearer money stories.",
+    content: `
+## The problem
+
+Users could not easily understand spending patterns or get actionable budget guidance.
+
+## Approach
+
+We combined a React client with Python services and OpenAI to turn transactions into plain-language insights and recommendations.
+
+## Product surface
+
+- Personalized budget nudges
+- Spending analysis and goals
+- Exportable reports for power users
+
+## Impact
+
+- 2× user retention
+- 90% satisfaction on in-app surveys
+    `,
+    category: "Case Study",
+    tag: "case-study",
+    image: "/Assets/aiml.jpg",
+    author: "IshSwamiTech Team",
+    authorAvatar: "/Assets/Programmers_4.jpg",
+    date: "2025-01-18",
+    readTime: "5 min read",
+  },
+  {
+    id: 10,
+    slug: "case-study-taskflow",
+    title: "Case Study: TaskFlow — Offline‑First Project Management",
+    excerpt:
+      "Electron + Vue desktop app for AgileWorks: Kanban, sync when online, and a measurable productivity gain.",
+    content: `
+## Requirements
+
+Distributed teams needed a desktop experience that worked fully offline and reconciled cleanly when connectivity returned.
+
+## Build
+
+Electron shell, Vue UI, local-first storage with background sync and conflict handling.
+
+## Capabilities
+
+- Kanban boards and collaboration
+- Time tracking and reporting
+- Reliable offline queues
+
+## Outcomes
+
+- ~60% self-reported productivity lift
+- 10K+ active users in the first year
+    `,
+    category: "Case Study",
+    tag: "case-study",
+    image: "/Assets/database.jpg",
+    author: "IshSwamiTech Team",
+    authorAvatar: "/Assets/Programmers_4.jpg",
+    date: "2025-01-12",
+    readTime: "6 min read",
+  },
+  {
+    id: 11,
+    slug: "case-study-edulearn",
+    title: "Case Study: EduLearn — Video Courses at 25K Students",
+    excerpt:
+      "Next.js e-learning with streaming, quizzes, and certificates for EduTech Academy.",
+    content: `
+## Brief
+
+Scale from a small cohort to tens of thousands of learners without sacrificing playback quality or instructor workflows.
+
+## Platform
+
+Next.js for SEO and speed, secure video delivery, quizzes, progress, and certificates.
+
+## Instructor tools
+
+Dashboards for content, cohorts, and basic analytics.
+
+## Scale
+
+- 25K+ students
+- 4.9 average course rating
+    `,
+    category: "Case Study",
+    tag: "case-study",
+    image: "/Assets/computer-screen-with-blue-background-with-keyboard-mouse.jpg",
+    author: "IshSwamiTech Team",
+    authorAvatar: "/Assets/Programmers_4.jpg",
+    date: "2025-01-08",
+    readTime: "5 min read",
+  },
+  {
+    id: 12,
+    slug: "case-study-safevault",
+    title: "Case Study: SafeVault — SOC2‑Ready Security Operations",
+    excerpt:
+      "React + FastAPI threat dashboard for SecureNet: faster incident response and audit-ready reporting.",
+    content: `
+## Need
+
+A single pane of glass across tools, with alerting and workflows security teams could trust.
+
+## Stack
+
+FastAPI services, React visualization, role-based access, and immutable audit logs.
+
+## Value
+
+- ~50% faster incident response
+- SOC2-aligned controls and reporting
+    `,
+    category: "Case Study",
+    tag: "case-study",
+    image:
+      "/Assets/double-exposure-caucasian-man-virtual-reality-vr-headset-is-presumably-gamer-hacker-cracking-code-into-secure-network-server-with-lines-code.jpg",
+    author: "IshSwamiTech Team",
+    authorAvatar: "/Assets/Programmers_4.jpg",
+    date: "2025-01-04",
+    readTime: "7 min read",
+  },
+  {
+    id: 13,
+    slug: "case-study-realestatehub",
+    title: "Case Study: RealEstateHub — Listings & Virtual Tours",
+    excerpt:
+      "Laravel + Vue portal for PropertyPro: more leads, thousands of listings, and agent tooling.",
+    content: `
+## Goal
+
+Compete with larger portals through search, tours, and lead routing.
+
+## Delivery
+
+Laravel APIs, Vue SPA-style modules, virtual tours, and agent CRM-lite features.
+
+## Metrics
+
+- 40% more qualified leads
+- 5K+ live listings managed in-platform
+    `,
+    category: "Case Study",
+    tag: "case-study",
+    image: "/Assets/20945284.jpg",
+    author: "IshSwamiTech Team",
+    authorAvatar: "/Assets/Programmers_4.jpg",
+    date: "2024-12-20",
+    readTime: "5 min read",
+  },
+  {
+    id: 14,
+    slug: "case-study-foodieapp",
+    title: "Case Study: FoodieApp — Multi‑Restaurant Delivery",
+    excerpt:
+      "React Native + Firebase ordering with live tracking for Foodie Inc — 100K+ downloads.",
+    content: `
+## Product
+
+Consumer app covering many restaurants, payments, promos, and delivery tracking.
+
+## Engineering
+
+React Native, Firebase backend, real-time order state, and merchant configuration.
+
+## Traction
+
+- 100K+ downloads
+- 4.7 store rating
+    `,
+    category: "Case Study",
+    tag: "case-study",
+    image: "/Assets/frontend.jpg",
+    author: "IshSwamiTech Team",
+    authorAvatar: "/Assets/Programmers_4.jpg",
+    date: "2024-12-14",
+    readTime: "6 min read",
+  },
+  {
+    id: 15,
+    slug: "case-study-smarthr",
+    title: "Case Study: SmartHR — HR ERP for 500+ Employees",
+    excerpt:
+      "React, Node.js, and MongoDB: payroll, attendance, and performance in one system for TalentCorp.",
+    content: `
+## Scope
+
+Replace fragmented HR tools with payroll, attendance, performance, recruitment, and leave in one product.
+
+## Architecture
+
+React admin and employee portals, Node.js services, MongoDB with careful reporting indexes.
+
+## Automation
+
+Roughly 80% reduction in manual HR processes after rollout.
+
+## Footprint
+
+500+ employees on platform within phase one.
+    `,
+    category: "Case Study",
+    tag: "case-study",
+    image: "/Assets/database.jpg",
+    author: "IshSwamiTech Team",
+    authorAvatar: "/Assets/Programmers_4.jpg",
+    date: "2024-12-08",
+    readTime: "8 min read",
+  },
 ];

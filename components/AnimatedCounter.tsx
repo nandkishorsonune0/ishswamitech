@@ -1,8 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+
+function subscribeReducedMotion(onStoreChange: () => void) {
+  const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mq.addEventListener("change", onStoreChange);
+  return () => mq.removeEventListener("change", onStoreChange);
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function getReducedMotionServerSnapshot() {
+  return false;
+}
 
 interface AnimatedCounterProps {
   end: number;
@@ -22,9 +35,16 @@ export default function AnimatedCounter({
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true });
+  const reduceMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot
+  );
+
+  const display = reduceMotion && isInView ? end : count;
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView || reduceMotion) return;
 
     let startTime: number;
     const animate = (timestamp: number) => {
@@ -36,12 +56,12 @@ export default function AnimatedCounter({
       }
     };
     requestAnimationFrame(animate);
-  }, [isInView, end, duration]);
+  }, [isInView, end, duration, reduceMotion]);
 
   return (
     <span ref={ref} className={className}>
       {prefix}
-      {count}
+      {display}
       {suffix}
     </span>
   );
